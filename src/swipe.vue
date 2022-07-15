@@ -60,7 +60,7 @@
 </template>
 
 <script>
-  import { once } from 'wind-dom/src/event';
+  // import { once } from 'wind-dom/src/event';
   import { addClass, removeClass } from 'wind-dom/src/class';
 
   export default {
@@ -172,7 +172,12 @@
             }
           };
 
-          once(element, 'webkitTransitionEnd', transitionEndCallback);
+          // once(element, 'webkitTransitionEnd', transitionEndCallback);
+          if(document.addEventListener) {
+            element.addEventListener('webkitTransitionEnd', transitionEndCallback, false);
+          }else{
+            element.attachEvent('onwebkitTransitionEnd', transitionEndCallback);
+          }
           setTimeout(transitionEndCallback, speed + 100); // webkitTransitionEnd maybe not fire on lower version android.
         } else {
           element.style.webkitTransition = '';
