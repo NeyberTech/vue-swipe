@@ -1,5 +1,6 @@
 const { resolve } = require('path');
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const { VueLoaderPlugin } = require('vue-loader');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
   mode: 'production',
@@ -25,12 +26,18 @@ module.exports = {
           extractCSS: true
         }
       },
-      { test: /\.js$/,
+      {
+        test: /\.js$/,
         loader: 'babel-loader'
+      },
+      {
+        test: /\.css$/i,
+        use: [MiniCssExtractPlugin.loader, 'css-loader'],
       }
     ]
   },
   plugins: [
-    new ExtractTextPlugin('vue-swipe.css')
+    new VueLoaderPlugin(),
+    new MiniCssExtractPlugin({ filename: 'vue-swipe.css' })
   ]
 };
